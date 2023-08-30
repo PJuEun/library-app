@@ -1,0 +1,54 @@
+# 옵션 : local
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: "jdbc:h2:mem:library;MODE=MYSQL;NON_KEYWORDS=USER"
+    username: "sa"
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+--- # 위랑 아래를 구분해줌
+# 옵션 : dev
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: "jdbc:mysql://localhost/library"
+    # jdbc:mysql:// => jdbc를 이용해 mysql에 접근한다
+    # localhost => 접근하려는 mysql은 localhost 안에 있다
+    # /library => 접근하려는 DB는 library이다.
+    username: "root" # mysql에 접근하기 위한 계정명
+    password: "1234" # mysql에 접근하기 위한 비밀번호
+    driver-class-name: com.mysql.cj.jdbc.Driver # 데이터베이스에 접근할 때 사용할 프로그램
+  jpa:
+    hibernate:
+      # 스프링이 DB 테이블도 자동으로 만들어줄 수 있음! (자동으로 제거도 가능!)
+      # 스프링이 시작할 때 DB에 있는 테이블을 어떻게 처리할 것인가
+      # create : 시작할 때 기존 테이블이 있으면 삭제하고 다시 만든다 (= 데이터는 날라감)
+      # create-drop : 스프링이 종료될 때 테이블을 삭제해버림 시작할 때 만들어 (= 데이터는 날라감)
+      # update : @Entity랑 테이블을 알아서 비교 -> 변경된 것만 업데이트
+      # validate : @Entity랑 테이블을 비교해서 다른게 있는지 확인
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true # JPA를 쓰면 개발자는 SQL을 문자열로 안쓰지만 JPA는 SQL을 쓴다
+        format_sql: true # 보여줄 때 예쁘게 보여달라
+
+        # SQL을 문자열로 안써요! --> 그런데 결국 DB에 SQL이 날라감 (JPA가 자동)
+        # 우리가 작성한 코드를 무슨 SQL로 바꿀지 -> MySQL / MSSQL / MariaDB
+        dialect: org.hibernate.dialect.MySQL8Dialect
