@@ -33,7 +33,7 @@ spring:
     # localhost => 접근하려는 mysql은 localhost 안에 있다
     # /library => 접근하려는 DB는 library이다.
     username: "root" # mysql에 접근하기 위한 계정명
-    password: "1234" # mysql에 접근하기 위한 비밀번호
+    password: "Abcd1234!" # mysql에 접근하기 위한 비밀번호
     driver-class-name: com.mysql.cj.jdbc.Driver # 데이터베이스에 접근할 때 사용할 프로그램
   jpa:
     hibernate:
